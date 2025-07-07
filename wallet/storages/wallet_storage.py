@@ -1,5 +1,6 @@
 import abc
 from peewee import * 
+import uuid
 
 
 from wallet.entities.wallet import Wallet
@@ -35,6 +36,10 @@ class AbstractWalletRepository(abc.ABC):
         pass
     
     @abc.abstractmethod
+    def get_by_id_or_none(self, uuid: uuid.UUID) -> Wallet | None:
+        pass
+    
+    @abc.abstractmethod
     def from_query_to_object(self, query: Wallet_model)-> Wallet:
         pass
     
@@ -58,6 +63,15 @@ class OrmWalletRepo(AbstractWalletRepository):
         ).where(Wallet_model.uuid == wallet.uuid).execute()
         
         return wallet
+    
+    
+    def get_by_id_or_none(self, uuid: uuid.UUID) -> Wallet | None:
+        
+        model = Wallet_model.get_or_none(Wallet_model.uuid == uuid)
+        if not model:
+            return None
+        
+        return self.from_query_to_wallet(model)
     
     
     def from_query_to_wallet(self, query: Wallet_model)-> Wallet:

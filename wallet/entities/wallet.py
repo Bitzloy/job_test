@@ -10,6 +10,7 @@ class Wallet():
     updated_at: datetime
     
     
+    """метода создания тестового кошелька"""
     @classmethod
     def create(cls, balance: float) -> "Wallet":
         return cls(

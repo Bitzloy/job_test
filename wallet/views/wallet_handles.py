@@ -1,4 +1,8 @@
-from flask import Blueprint
+from flask import Blueprint, request, jsonify
+
+from wallet.commands.command import UpdateWalletCommand
+from wallet.entities.wallet import Wallet
+from wallet.storages.wallet_storage import OrmWalletRepo
 
 
 wallet_blueprint = Blueprint(
@@ -6,8 +10,14 @@ wallet_blueprint = Blueprint(
 )
 
 
-@wallet_blueprint.post('/')
-def add_wallet():
-    return "Hello world"
+@wallet_blueprint.post('/<wallet_uuid:uuid>/operation')
+def update_wallet(wallet_uuid):
+    body = request.get_json()
+    wallet = UpdateWalletCommand(
+        operation=body["operation_type"],
+        amount=body["amount"],
+        wallet=Wallet
+    ).execute(uuid=wallet_uuid, wallet_repo=OrmWalletRepo)
+    return jsonify(wallet)
 
 # @wallet_blueprint.post('/<WALLET_UUID:uuid>/withdraw')
