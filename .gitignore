@@ -1,0 +1,7 @@
+.venv/
+.idea/
+__pycache__/
+*11
+.pytest_cache/
+.coverage
+pgdata/
