@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 
-from wallet.commands.command import UpdateWalletCommand
+from wallet.commands.command import UpdateWalletCommand, GetBalanceCommand
 from wallet.entities.wallet import Wallet
 from wallet.storages.wallet_storage import OrmWalletRepo
 
@@ -27,3 +27,7 @@ def update_wallet(wallet_uuid):
     return jsonify(wallet)
 
 
+@wallet_blueprint.get("/<uuid:wallet_uuid>/")
+def get_wallet_balance(wallet_uuid):
+    balance = GetBalanceCommand().execute(uuid=wallet_uuid, wallet_repo=OrmWalletRepo())
+    return jsonify(balance)

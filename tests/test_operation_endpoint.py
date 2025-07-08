@@ -78,3 +78,12 @@ def test_withdraw_not_existable_wallet(client):
 
     
     
+
+def test_get_balance(client, create_wallet, wallet_repo):
+    wallet = create_wallet
+    response = client.get(f"/api/v1/wallets/{wallet.uuid}/")
+    json_response = response.json
+    
+    assert json_response == {"balance": str(wallet.balance)}
+    
+    wallet_repo.delete(uuid=wallet.uuid)

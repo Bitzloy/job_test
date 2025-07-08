@@ -38,7 +38,7 @@ class AbstractWalletRepository(abc.ABC):
         pass
     
     @abc.abstractmethod
-    def get_by_id_or_none(self, uuid: uuid.UUID) -> Wallet | None:
+    def get_by_uuid_or_none(self, uuid: uuid.UUID) -> Wallet | None:
         pass
     
     @abc.abstractmethod
@@ -63,15 +63,19 @@ class OrmWalletRepo(AbstractWalletRepository):
     
     
     def update(self, wallet: Wallet)-> Wallet:
-        Wallet_model.update(
-            balance=wallet.balance,
-            updated_at=wallet.updated_at
-        ).where(Wallet_model.uuid == wallet.uuid).execute()
-        
-        return wallet
+        # with db.atomic() as transaction:
+        #     try:
+                Wallet_model.update(
+                    balance=wallet.balance,
+                    updated_at=wallet.updated_at
+                ).where(Wallet_model.uuid == wallet.uuid).execute()
+            # except Exception():
+            #     transaction.rollback()
+            #     raise ApiError
+                return wallet
     
     
-    def get_by_id_or_none(self, uuid: uuid.UUID) -> Wallet | None:
+    def get_by_uuid_or_none(self, uuid: uuid.UUID) -> Wallet | None:
         
         model = Wallet_model.get_or_none(Wallet_model.uuid == uuid)
         if not model:

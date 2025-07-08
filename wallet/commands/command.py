@@ -18,7 +18,7 @@ class UpdateWalletCommand():
         
     
     def execute(self, uuid:uuid, wallet_repo: AbstractWalletRepository):
-        wallet = wallet_repo.get_by_id_or_none(uuid=uuid)
+        wallet = wallet_repo.get_by_uuid_or_none(uuid=uuid)
         if wallet:
             if self.operation == "WITHDRAW":
                 if wallet.balance >= self.amount:
@@ -42,3 +42,15 @@ class UpdateWalletCommand():
             new_wallet = self.wallet.create(id=uuid)
             new_wallet.deposit(self.amount)
             return wallet_repo.add(new_wallet)
+
+
+
+class GetBalanceCommand():
+    
+    def execute(self, uuid: uuid, wallet_repo: AbstractWalletRepository):
+        wallet = wallet_repo.get_by_uuid_or_none(uuid)
+        balance = None
+        if wallet:
+            balance = {"balance": wallet.balance}
+            return balance
+        raise Exception()
