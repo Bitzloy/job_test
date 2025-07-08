@@ -5,6 +5,8 @@ import uuid
 
 from wallet.entities.wallet import Wallet
 
+from wallet.database import db
+
 
 class BaseModel(Model):
     id = AutoField()
@@ -15,8 +17,8 @@ class BaseModel(Model):
 
 
 class Wallet_model(BaseModel):
-    balance = FloatField()
-    uuid = UUIDField()
+    balance = DecimalField()
+    uuid = CharField()
     updated_at = CharField()
     
     class Meta:
@@ -40,7 +42,11 @@ class AbstractWalletRepository(abc.ABC):
         pass
     
     @abc.abstractmethod
-    def from_query_to_object(self, query: Wallet_model)-> Wallet:
+    def from_query_to_wallet(self, query: Wallet_model)-> Wallet:
+        pass
+    
+    @abc.abstractmethod
+    def delete(self, uuid: uuid.UUID) -> None:
         pass
     
 
@@ -80,3 +86,11 @@ class OrmWalletRepo(AbstractWalletRepository):
                         updated_at=query.updated_at)
         
         return wallet
+    
+    
+    def delete(self, uuid):
+        model_to_delete = Wallet_model.get_or_none(Wallet_model.uuid == uuid)
+        if model_to_delete:
+            model_to_delete.delete_instance()
+        # Wallet_model.delete(Wallet_model.where Wallet_model.uuid == uuid)
+        # Wallet_model.delete((Wallet_model.balance, Wallet_model.updated_at, Wallet_model,uuid).where(Wallet_model.uuid == uuid))

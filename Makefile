@@ -9,7 +9,7 @@ PYTEST_ARGS ?= -vv -x
 # run:
 # 	PYTHONPATH=src:. flask --app checklists run --host=0.0.0.0 --debug
 run:
-	PYTHONPATH=src:. flask --app 'checklists:create_app()' run --host=0.0.0.0 --debug
+	PYTHONPATH=src:. flask --app 'wallet:create_app()' run --host=0.0.0.0 --debug
 	
 # test:
 # 	coverage run -m pytest $(PYTEST_ARGS) $(PYTEST_TARGET) && coverage report
