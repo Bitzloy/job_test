@@ -14,5 +14,5 @@ run:
 # test:
 # 	coverage run -m pytest $(PYTEST_ARGS) $(PYTEST_TARGET) && coverage report
 
-# cs:
-# 	autoflake . && black . && isort .
+cs:
+	autoflake . && black . && isort .

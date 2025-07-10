@@ -1,4 +1,11 @@
-from peewee import * 
+from peewee import *
 
-# db = PostgresqlDatabase(database="pgdb", user="lol", password="example", host="pgdb", port=5432)
-db = SqliteDatabase("./database.db")
+# from psycopg2.extensions import ISOLATION_LEVEL_SERIALIZABLE
+
+db = PostgresqlDatabase(
+    database="pgdb", user="lol", password="example", host="pgdb", port=5432
+)
+# db = SqliteDatabase("./database.db")
+# db = PostgresqlDatabase()
+
+# db.init('pgdb', isolation_level=psycopg2.extensions.ISOLATION_LEVEL_SERIALIZABLE)

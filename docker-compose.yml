@@ -1,11 +1,11 @@
 # Use postgres/example user/password credentials
 
 services:
-  checklist:
+  wallet:
     build: .
     ports:
       - 5000:5000
-    container_name: checklists
+    container_name: wallet
     volumes: 
       - .:/usr/src/app
     depends_on: 
@@ -35,10 +35,5 @@ services:
       
     
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
-  
+
 

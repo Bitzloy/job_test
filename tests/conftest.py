@@ -1,10 +1,11 @@
-import pytest
 from decimal import Decimal
 
+import pytest
 
 from wallet.__init__ import create_app
-from wallet.storages.wallet_storage import OrmWalletRepo
+from wallet.database import db
 from wallet.entities.wallet import Wallet
+from wallet.storages.wallet_storage import OrmWalletRepo
 
 
 @pytest.fixture
@@ -22,12 +23,11 @@ def client(app):
 
 @pytest.fixture
 def wallet_repo():
-    return OrmWalletRepo()
+    return OrmWalletRepo(db)
 
 
 @pytest.fixture
-def create_wallet(wallet_repo, balance: Decimal=Decimal(3000)):
+def create_wallet(wallet_repo, balance: Decimal = Decimal(3000)):
     test_wallet = Wallet.create(balance=balance)
     added_wallet = wallet_repo.add(test_wallet)
     return added_wallet
-    
