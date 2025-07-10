@@ -12,7 +12,7 @@ def test_deposit_end_point(client, create_wallet, wallet_repo):
     json_response = response.json
 
     assert isinstance(uuid.UUID(json_response["uuid"]), uuid.UUID)
-    assert json_response["balance"] == str(wallet.balance + 1000)
+    assert json_response["balance"] == f"{wallet.balance + 1000}.00000"
     assert "updated_at" in json_response
     assert response.status_code == 200
 
@@ -30,7 +30,7 @@ def test_withdraw_end_point(client, create_wallet, wallet_repo):
     json_response = response.json
 
     assert isinstance(uuid.UUID(json_response["uuid"]), uuid.UUID)
-    assert json_response["balance"] == str(wallet.balance - 1000)
+    assert json_response["balance"] == f"{wallet.balance - 1000}.00000"
     assert "updated_at" in json_response
     assert response.status_code == 200
 
@@ -76,7 +76,7 @@ def test_get_balance(client, create_wallet, wallet_repo):
     response = client.get(f"/api/v1/wallets/{wallet.uuid}/")
     json_response = response.json
 
-    assert json_response == {"balance": str(wallet.balance)}
+    assert json_response == {"balance": f"{wallet.balance}.00000"}
 
     wallet_repo.delete(uuid=wallet.uuid)
 

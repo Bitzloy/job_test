@@ -16,7 +16,7 @@ class OperationType(StrEnum):
 @dataclass
 class Wallet:
     balance: Decimal
-    uuid: uuid
+    uuid: uuid.UUID
     updated_at: datetime
 
     """метод создания тестового кошелька"""

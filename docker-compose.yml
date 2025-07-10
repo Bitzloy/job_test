@@ -10,7 +10,8 @@ services:
       - .:/usr/src/app
     depends_on: 
       - pgdb
-    
+    # command: 
+
 
   pgdb:
     image: postgres
@@ -27,9 +28,9 @@ services:
       - 5432:5432
     container_name: pgdb
     environment:
-      POSTGRES_PASSWORD: example
-      POSTGRES_USER: lol
-      POSTGRES_DB: pgdb
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
     volumes:
       - ./pgdata:/var/lib/postgresql/data
       

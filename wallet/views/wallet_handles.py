@@ -11,7 +11,7 @@ from wallet.commands.command import (
     UpdateWalletCommand,
     UpdateWalletRequestDTO,
 )
-from wallet.database import db
+from wallet.database import make_db
 from wallet.storages.wallet_storage import OrmWalletRepo
 
 wallet_blueprint = Blueprint(
@@ -29,15 +29,14 @@ wallet_blueprint = Blueprint(
 @wallet_blueprint.post("/<wallet_uuid>/operation")
 @validate()
 def update_wallet(wallet_uuid: uuid.UUID, body: UpdateWalletRequestDTO):
-    wallet = UpdateWalletCommand(wallet_repo=OrmWalletRepo(db)).execute(
+    return UpdateWalletCommand(wallet_repo=OrmWalletRepo(make_db())).execute(
         body, wallet_uuid
     )
-    return jsonify(wallet)
 
 
 @wallet_blueprint.get("/<uuid:wallet_uuid>/")
 def get_wallet_balance(wallet_uuid):
-    balance = GetBalanceCommand(wallet_repo=OrmWalletRepo(db)).execute(
+    balance = GetBalanceCommand(wallet_repo=OrmWalletRepo(make_db())).execute(
         uuid=wallet_uuid
     )
     return jsonify(balance)

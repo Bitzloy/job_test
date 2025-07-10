@@ -3,7 +3,7 @@ from decimal import Decimal
 import pytest
 
 from wallet.__init__ import create_app
-from wallet.database import db
+from wallet.database import make_db
 from wallet.entities.wallet import Wallet
 from wallet.storages.wallet_storage import OrmWalletRepo
 
@@ -23,7 +23,7 @@ def client(app):
 
 @pytest.fixture
 def wallet_repo():
-    return OrmWalletRepo(db)
+    return OrmWalletRepo(make_db())
 
 
 @pytest.fixture

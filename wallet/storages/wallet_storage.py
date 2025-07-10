@@ -3,7 +3,7 @@ import uuid
 
 from peewee import *
 
-from wallet.database import db
+from wallet.database import make_db
 from wallet.entities.wallet import Wallet
 
 
@@ -11,12 +11,12 @@ class BaseModel(Model):
     id = AutoField()
 
     class Meta:
-        database = db
+        database = make_db()
 
 
 class Wallet_model(BaseModel):
     balance = DecimalField()
-    uuid = CharField()
+    uuid = UUIDField()
     updated_at = CharField()
 
     class Meta:
