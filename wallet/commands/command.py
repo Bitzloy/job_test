@@ -25,6 +25,12 @@ class UpdateWalletResponse(BaseModel):
     updated_at: datetime
 
 
+"""
+Абстрагировали комманду создания кошелька а так же обновления записи в таблице
+Приводим к валидным значениям, оборачиваем в транзакцию
+"""
+
+
 class UpdateWalletCommand:
 
     def __init__(self, wallet_repo: AbstractWalletRepository):

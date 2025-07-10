@@ -37,9 +37,6 @@ with suppress(ImportError):
 
 
 def migrate(migrator: Migrator, database: pw.Database, *, fake=False):
-    pass
-
-    # database.create_tables(Wallet_model)
     migrator.create_table(Wallet_model)
 
 

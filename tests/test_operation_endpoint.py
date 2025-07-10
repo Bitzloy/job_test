@@ -38,8 +38,7 @@ def test_withdraw_end_point(client, create_wallet, wallet_repo):
 
 
 """
-При переходе по несуществующему uuid в зависимости от операции, кидаем исключение или создаем новый кошелек
-В данном случае создаем, так как операция пополнение
+При переходе по несуществующему uuid создаем новый кошелек, в зависимости от операции, кидаем ошибку или пополняем баланс 
 """
 
 
@@ -58,6 +57,9 @@ def test_deposit_not_existable_wallet(client, wallet_repo):
     assert response.status_code == 200
 
     wallet_repo.delete(json_response["uuid"])
+
+
+"""здесь получаем код ошибки"""
 
 
 def test_withdraw_not_enough_money(client):

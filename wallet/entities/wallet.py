@@ -40,9 +40,7 @@ class Wallet:
         self.updated_at = datetime.now()
 
     def update_balance(self, operation: OperationType, amount: Decimal):
-
-        if operation == OperationType.WITHDRAW:  # ccылка на тип из enum
-            # if wallet.balance >= UpdateWalletRequest.amount:
+        if operation == OperationType.WITHDRAW:
             if self.balance < amount:
                 raise MoneyNotEnoughApiError()
 

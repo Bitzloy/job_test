@@ -90,15 +90,5 @@ class OrmWalletRepo(AbstractWalletRepository):
         if model_to_delete:
             model_to_delete.delete_instance()
 
-    # @contextmanager
-    # def transaction(self, isolation_level):
-    #     conn = db.connection()
-    #     conn.set_isolation_level(isolation_level)
-    #     try:
-    #         with db.atomic():
-    #             yield
-    #     finally:
-    #         conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_READ_COMMITTED)
-
     def transaction(self):
         return self.connect.atomic()
