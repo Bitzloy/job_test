@@ -15,7 +15,7 @@ run:
 	PYTHONPATH=src:. flask --app 'wallet:create_app()' run --host=0.0.0.0 --debug
 	
 test:
-	docker exec -it wallet coverage run -m pytest $(PYTEST_ARGS) $(PYTEST_TARGET) && coverage report
+	docker exec -it wallet sh -c "coverage run -m pytest $(PYTEST_ARGS) $(PYTEST_TARGET) && coverage report"
 
 cs:
 	autoflake . && black . && isort .
@@ -30,4 +30,4 @@ down:
 	docker compose down
 
 cs_docker:
-	docker exec -it wallet autoflake . && black . && isort .
+	docker exec -it wallet sh -c "autoflake . && black . && isort ."
